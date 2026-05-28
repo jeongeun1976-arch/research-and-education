@@ -55,7 +55,7 @@
 
     <nav class="bg-white border-b sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-            <h1 class="text-xl font-bold text-indigo-600">R&E 기초 탐구 설계기</h1>
+            <h1 class="text-xl font-bold text-indigo-600">R&E 기초 탐구 계획서</h1>
             <div class="flex space-x-2" id="nav-bullets">
                 <span class="nav-bullet active w-8 h-8 rounded-full border flex items-center justify-center text-sm font-semibold transition-all">1</span>
                 <span class="nav-bullet w-8 h-8 rounded-full border flex items-center justify-center text-sm font-semibold transition-all">2</span>
@@ -77,19 +77,19 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 bg-indigo-50/50 rounded-xl border border-indigo-100/50">
                     <div>
-                        <label class="block text-sm font-semibold mb-1 text-indigo-950">함께 하는 모둠원</label>
-                        <input type="text" id="input-members" placeholder="예: 김철수, 이영희 (개인 연구인 경우 '단독')" class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <label class="block text-sm font-semibold mb-1 text-indigo-950">이름</label>
+                        <input type="text" id="input-members" placeholder="예: 김철수, 이영희" class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
                         <label class="block text-sm font-semibold mb-1 text-indigo-950">지도교사</label>
-                        <input type="text" id="input-teacher" placeholder="지도교사 성함을 입력하세요 (미정인 경우 '미정')" class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="text" id="input-teacher" placeholder="지도교사 성함을 입력하세요" class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-semibold mb-1">탐구 주제 (가제)</label>
+                            <label class="block text-sm font-semibold mb-1">탐구 주제</label>
                             <input type="text" id="input-title" placeholder="주제를 명확하고 간결하게 입력하세요" class="w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                         </div>
                         <div>
@@ -232,7 +232,7 @@
                         <h3 id="preview-title" class="text-2xl font-bold text-gray-900 underline decoration-indigo-300 underline-offset-4">탐구 주제가 여기에 표시됩니다</h3>
                         
                         <div class="flex justify-center flex-wrap gap-4 mt-4 text-xs md:text-sm text-gray-600">
-                            <span class="bg-gray-100 px-3 py-1.5 rounded-lg"><strong>모둠원:</strong> <span id="preview-members" class="ml-1 font-medium text-gray-800">-</span></span>
+                            <span class="bg-gray-100 px-3 py-1.5 rounded-lg"><strong>이름:</strong> <span id="preview-members" class="ml-1 font-medium text-gray-800">-</span></span>
                             <span class="bg-gray-100 px-3 py-1.5 rounded-lg"><strong>지도교사:</strong> <span id="preview-teacher" class="ml-1 font-medium text-gray-800">-</span></span>
                         </div>
                     </div>
