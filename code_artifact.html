@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R&E 기초 탐구 계획 설계 플랫폼</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #fcfcfc;
+            color: #1f2937;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-bullet.active {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <h1 class="text-xl font-bold text-indigo-600">R&E 기초 탐구 설계기</h1>
+            <div class="flex space-x-2" id="nav-bullets">
+                <span class="nav-bullet active w-8 h-8 rounded-full border flex items-center justify-center text-sm font-semibold transition-all">1</span>
+                <span class="nav-bullet w-8 h-8 rounded-full border flex items-center justify-center text-sm font-semibold transition-all">2</span>
+                <span class="nav-bullet w-8 h-8 rounded-full border flex items-center justify-center text-sm font-semibold transition-all">3</span>
+                <span class="nav-bullet w-8 h-8 rounded-full border flex items-center justify-center text-sm font-semibold transition-all">4</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 mt-8">
+
+        <!-- Section 1: Basic Info & Core Concept -->
+        <section id="step1" class="step-content active">
+            <div class="bg-white rounded-2xl shadow-sm border p-6 md:p-8">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-2">01. 탐구의 시작점</h2>
+                    <p class="text-gray-600">어떤 주제에 대해 탐구하고 싶나요? 기본적인 정보를 입력하고 탐구의 성격을 정의해 보세요.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 bg-indigo-50/50 rounded-xl border border-indigo-100/50">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-indigo-950">함께 하는 모둠원</label>
+                        <input type="text" id="input-members" placeholder="예: 김철수, 이영희 (개인 연구인 경우 '단독')" class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-indigo-950">지도교사</label>
+                        <input type="text" id="input-teacher" placeholder="지도교사 성함을 입력하세요 (미정인 경우 '미정')" class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">탐구 주제 (가제)</label>
+                            <input type="text" id="input-title" placeholder="주제를 명확하고 간결하게 입력하세요" class="w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">탐구 영역 선택</label>
+                            <select id="input-category" class="w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option value="인문·사회과학">인문·사회과학</option>
+                                <option value="자연과학">자연과학</option>
+                                <option value="공학·기술">공학·기술</option>
+                                <option value="예술·체육">예술·체육</option>
+                                <option value="융합(학제간)">융합(학제간)</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-xs font-semibold mb-1">키워드1</label>
+                                <input type="text" class="keyword-input w-full p-2 bg-gray-50 border rounded-lg text-sm" placeholder="AI">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold mb-1">키워드2</label>
+                                <input type="text" class="keyword-input w-full p-2 bg-gray-50 border rounded-lg text-sm" placeholder="환경">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold mb-1">키워드3</label>
+                                <input type="text" class="keyword-input w-full p-2 bg-gray-50 border rounded-lg text-sm" placeholder="윤리">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4 flex flex-col items-center justify-center border border-dashed">
+                        <span class="text-xs font-bold text-gray-400 mb-2">분야별 탐구 비중 시각화</span>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Logic & Background -->
+        <section id="step2" class="step-content">
+            <div class="bg-white rounded-2xl shadow-sm border p-6 md:p-8">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-2">02. 탐구의 논리 설계</h2>
+                    <p class="text-gray-600">왜 이 탐구가 필요한가요? 기존 지식과 나의 호기심을 연결하는 단계입니다.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
+                        <label class="block text-sm font-bold text-indigo-900 mb-2">가. 탐구 동기 및 목적</label>
+                        <textarea id="input-motivation" rows="4" placeholder="교과 수업 중 느낀 궁금증이나 개인적인 경험을 적어주세요." class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                        <label class="block text-sm font-bold text-emerald-900 mb-2">나. 선행 연구 분석 (배경지식)</label>
+                        <textarea id="input-background" rows="4" placeholder="이 주제에 대해 이미 알고 있는 사실이나 찾아본 자료를 요약하세요." class="w-full p-3 bg-white border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Methodology & Daily Timeline (4 Days) -->
+        <section id="step3" class="step-content">
+            <div class="bg-white rounded-2xl shadow-sm border p-6 md:p-8">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-2">03. 일자별 실행 계획 (4일 집중 탐구)</h2>
+                    <p class="text-gray-600">4일간의 집중 탐구 일정을 수립해 보세요. 각 단계별 수행 활동을 지정하여 촘촘한 계획을 세울 수 있습니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-1 space-y-4">
+                        <div class="p-4 bg-gray-50 rounded-xl border">
+                            <label class="block text-sm font-semibold mb-2">탐구 방법론 선택</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 text-sm cursor-pointer hover:text-indigo-600">
+                                    <input type="checkbox" class="method-check" value="문헌 조사"> <span>문헌 조사(논문 분석)</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-sm cursor-pointer hover:text-indigo-600">
+                                    <input type="checkbox" class="method-check" value="설문 조사"> <span>설문 조사</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-sm cursor-pointer hover:text-indigo-600">
+                                    <input type="checkbox" class="method-check" value="실험/실습"> <span>실험 및 데이터 수집</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-sm cursor-pointer hover:text-indigo-600">
+                                    <input type="checkbox" class="method-check" value="사례 분석"> <span>사례 분석</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <div class="space-y-3" id="timeline-container">
+                            <div class="flex items-start space-x-3 timeline-row">
+                                <div class="w-16 shrink-0">
+                                    <input type="text" class="day-label p-2 w-full bg-indigo-50 border border-indigo-200 rounded text-xs font-bold text-center" value="1일차">
+                                </div>
+                                <input type="text" class="day-input w-full p-3 bg-gray-50 border rounded-lg text-sm" placeholder="[연구 설계] 주제 구체화 및 선행연구 분석 계획">
+                            </div>
+                            <div class="flex items-start space-x-3 timeline-row">
+                                <div class="w-16 shrink-0">
+                                    <input type="text" class="day-label p-2 w-full bg-indigo-50 border border-indigo-200 rounded text-xs font-bold text-center" value="2일차">
+                                </div>
+                                <input type="text" class="day-input w-full p-3 bg-gray-50 border rounded-lg text-sm" placeholder="[탐구 수행] 실제 데이터 수집 또는 실험/조사 수행 계획">
+                            </div>
+                            <div class="flex items-start space-x-3 timeline-row">
+                                <div class="w-16 shrink-0">
+                                    <input type="text" class="day-label p-2 w-full bg-indigo-50 border border-indigo-200 rounded text-xs font-bold text-center" value="3일차">
+                                </div>
+                                <input type="text" class="day-input w-full p-3 bg-gray-50 border rounded-lg text-sm" placeholder="[결과 분석] 수집된 자료 정리 및 논리적 결론 도출 계획">
+                            </div>
+                            <div class="flex items-start space-x-3 timeline-row">
+                                <div class="w-16 shrink-0">
+                                    <input type="text" class="day-label p-2 w-full bg-indigo-50 border border-indigo-200 rounded text-xs font-bold text-center" value="4일차">
+                                </div>
+                                <input type="text" class="day-input w-full p-3 bg-gray-50 border rounded-lg text-sm" placeholder="[보고서 작성] 최종 탐구 결과물 및 초안 검토/보완 계획">
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-gray-400 mt-2">* 왼쪽의 '일차'는 실제 날짜(예: 5/20)로 수정하여 입력할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Final Preview & Submit -->
+        <section id="step4" class="step-content">
+            <div class="bg-white rounded-2xl shadow-sm border p-6 md:p-8">
+                <div class="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">04. 탐구 설계 최종 제출 및 검토</h2>
+                        <p class="text-gray-600">작성된 내용을 최종 확인하고, 구글 시트로 즉시 전송하여 제출해 보세요.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="window.print()" class="px-4 py-2.5 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors text-sm">PDF 저장/인쇄</button>
+                        <button onclick="submitPlanToSheet()" class="px-6 py-2.5 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 shadow-md shadow-indigo-100 transition-all text-sm flex items-center space-x-2">
+                            <span>구글 시트로 계획서 제출하기</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border-t pt-6 space-y-8" id="preview-area">
+                    <div class="text-center pb-6 border-b border-gray-100">
+                        <span id="preview-category" class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold mb-2">분야 미정</span>
+                        <h3 id="preview-title" class="text-2xl font-bold text-gray-900 underline decoration-indigo-300 underline-offset-4">탐구 주제가 여기에 표시됩니다</h3>
+                        
+                        <div class="flex justify-center flex-wrap gap-4 mt-4 text-xs md:text-sm text-gray-600">
+                            <span class="bg-gray-100 px-3 py-1.5 rounded-lg"><strong>모둠원:</strong> <span id="preview-members" class="ml-1 font-medium text-gray-800">-</span></span>
+                            <span class="bg-gray-100 px-3 py-1.5 rounded-lg"><strong>지도교사:</strong> <span id="preview-teacher" class="ml-1 font-medium text-gray-800">-</span></span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-xl">
+                            <h4 class="font-bold text-sm text-gray-500 mb-2 uppercase">Core Keywords</h4>
+                            <div id="preview-keywords" class="flex flex-wrap gap-2 text-indigo-600 font-semibold italic"></div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl">
+                            <h4 class="font-bold text-sm text-gray-500 mb-2 uppercase">Selected Methods</h4>
+                            <div id="preview-methods" class="text-sm"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold border-l-4 border-indigo-500 pl-3 mb-3">탐구의 목적과 맥락</h4>
+                        <p id="preview-motivation" class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap italic bg-gray-50 p-4 rounded-lg"></p>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <h4 class="font-bold border-l-4 border-emerald-500 pl-3 mb-3">4일 집중 실행 로드맵</h4>
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border p-2 w-24 text-center">일정/기한</th>
+                                    <th class="border p-2 text-left">활동 계획</th>
+                                </tr>
+                            </thead>
+                            <tbody id="preview-timeline-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="mt-8 flex justify-between items-center">
+            <button id="prevBtn" class="px-6 py-3 bg-gray-200 text-gray-600 rounded-xl font-bold hover:bg-gray-300 transition-all opacity-0 pointer-events-none">이전 단계</button>
+            <div class="text-sm text-gray-400 font-medium"><span id="step-count">1</span> / 4</div>
+            <button id="nextBtn" class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all">다음 단계로</button>
+        </div>
+    </main>
+
+    <!-- Status & Loading Overlay Modal -->
+    <div id="status-modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-[100] backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl scale-95 transition-all duration-300 transform" id="modal-content">
+            <div id="modal-icon" class="mb-4 flex justify-center"></div>
+            <h3 id="modal-title" class="text-xl font-bold text-gray-900 mb-2">제출 중...</h3>
+            <p id="modal-text" class="text-gray-500 text-sm mb-6 leading-relaxed">정보를 안전하게 전달하는 중입니다.</p>
+            <div id="modal-actions" class="flex justify-center">
+                <button onclick="closeStatusModal()" id="modal-close-btn" class="px-6 py-2.5 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-colors hidden">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-16 text-center text-gray-400 text-xs">
+        <p>&copy; 2026 R&E Research Planning Assistant. GitHub Pages Integration Version.</p>
+    </footer>
+
+    <script>
+        // 🚨 깃허브 배포 시 중요: 구글 앱스 스크립트 '새 배포' 시 발급받은 웹앱 URL을 아래 따옴표 안에 넣어주세요!
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzb1wP0uKuZ3MtLJCwGWObYUtLEq02C7sc-o9JLzJfVhiR0l3P0sY6l1Kawn3D37OW-0Q/exec";
+
+        let currentStep = 1;
+        const totalSteps = 4;
+        let categoryChart = null;
+
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const stepCountText = document.getElementById('step-count');
+        const navBullets = document.querySelectorAll('.nav-bullet');
+
+        window.onload = () => {
+            initChart();
+            updateStep();
+            document.getElementById('input-category').addEventListener('change', updateChart);
+        };
+
+        function initChart() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['인문', '사회', '과학', '공학', '예술'],
+                    datasets: [{
+                        data: [20, 20, 20, 20, 20],
+                        backgroundColor: ['#818cf8', '#60a5fa', '#34d399', '#fbbf24', '#f87171'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        function updateChart() {
+            const selected = document.getElementById('input-category').value;
+            let newData = [20, 20, 20, 20, 20];
+            if(selected === '인문·사회과학') newData = [40, 40, 10, 5, 5];
+            else if(selected === '자연과학') newData = [5, 5, 80, 5, 5];
+            else if(selected === '공학·기술') newData = [5, 5, 10, 75, 5];
+            else if(selected === '예술·체육') newData = [5, 5, 5, 5, 80];
+            else if(selected === '융합(학제간)') newData = [25, 25, 25, 15, 10];
+            categoryChart.data.datasets[0].data = newData;
+            categoryChart.update();
+        }
+
+        function updateStep() {
+            document.querySelectorAll('.step-content').forEach((sec, idx) => {
+                sec.classList.toggle('active', idx + 1 === currentStep);
+            });
+            navBullets.forEach((bullet, idx) => {
+                bullet.classList.toggle('active', idx + 1 <= currentStep);
+            });
+            prevBtn.style.opacity = currentStep === 1 ? '0' : '1';
+            prevBtn.style.pointerEvents = currentStep === 1 ? 'none' : 'auto';
+            nextBtn.innerText = currentStep === totalSteps ? '설계 완료' : '다음 단계로';
+            stepCountText.innerText = currentStep;
+            if (currentStep === 4) renderPreview();
+        }
+
+        function renderPreview() {
+            document.getElementById('preview-title').innerText = document.getElementById('input-title').value || "주제 미정";
+            document.getElementById('preview-category').innerText = document.getElementById('input-category').value;
+            
+            document.getElementById('preview-members').innerText = document.getElementById('input-members').value || "단독 연구";
+            document.getElementById('preview-teacher').innerText = document.getElementById('input-teacher').value || "미정";
+            
+            const kwContainer = document.getElementById('preview-keywords');
+            kwContainer.innerHTML = '';
+            document.querySelectorAll('.keyword-input').forEach(input => {
+                if(input.value) {
+                    const span = document.createElement('span');
+                    span.innerText = '#' + input.value;
+                    kwContainer.appendChild(span);
+                }
+            });
+            const methods = [];
+            document.querySelectorAll('.method-check:checked').forEach(c => methods.push(c.value));
+            document.getElementById('preview-methods').innerText = methods.length > 0 ? methods.join(', ') : "선택된 방법 없음";
+            document.getElementById('preview-motivation').innerText = document.getElementById('input-motivation').value || "동기가 입력되지 않았습니다.";
+
+            const tbody = document.getElementById('preview-timeline-body');
+            tbody.innerHTML = '';
+            const rows = document.querySelectorAll('.timeline-row');
+            rows.forEach(row => {
+                const label = row.querySelector('.day-label').value;
+                const desc = row.querySelector('.day-input').value;
+                if(desc) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="border p-2 text-center font-bold text-indigo-600">${label}</td>
+                        <td class="border p-2">${desc}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+        }
+
+        function submitPlanToSheet() {
+            const keywords = [];
+            document.querySelectorAll('.keyword-input').forEach(input => {
+                if (input.value) keywords.push(input.value);
+            });
+            
+            const methods = [];
+            document.querySelectorAll('.method-check:checked').forEach(c => methods.push(c.value));
+            
+            const timeline = [];
+            const rows = document.querySelectorAll('.timeline-row');
+            rows.forEach(row => {
+                timeline.push({
+                    label: row.querySelector('.day-label').value,
+                    desc: row.querySelector('.day-input').value
+                });
+            });
+
+            const data = {
+                members: document.getElementById('input-members').value || "단독",
+                teacher: document.getElementById('input-teacher').value || "미정",
+                title: document.getElementById('input-title').value || "주제 미정",
+                category: document.getElementById('input-category').value,
+                keywords: keywords,
+                methods: methods,
+                motivation: document.getElementById('input-motivation').value,
+                background: document.getElementById('input-background').value,
+                timeline: timeline
+            };
+
+            if (!data.title || data.title === "주제 미정") {
+                openStatusModal('warning', '주제 미입력', '1단계에서 탐구 주제(가제)를 정밀하게 입력해 주시기 바랍니다.');
+                return;
+            }
+
+            openStatusModal('loading', '계획서 전송 중', '작성하신 R&E 계획서 데이터를 구글 스프레드시트에 전송하고 있습니다. 잠시만 대기해 주세요.');
+
+            // 구글 앱스 스크립트 웹앱이 깃허브 외부 도메인 호출을 지원하기 위한 Fetch 통신 처리
+            if (GAS_WEB_APP_URL && GAS_WEB_APP_URL.indexOf("exec") !== -1) {
+                fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // 외부 호스팅 환경에서 CORS 이슈 예방 조치
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    // no-cors 모드 특성상 불투명(opaque) 응답을 받으므로 가상 성공 처리를 함께 연출합니다.
+                    openStatusModal('success', '제출 완료 🎉', '계획서가 구글 스프레드시트로 무사히 전송되었습니다.\n실시간 연동 시트에 올바르게 기재되었는지 확인해 주시기 바랍니다.');
+                })
+                .catch(err => {
+                    openStatusModal('error', '전송 오류 🚨', '네트워크에 문제가 있거나 구글 앱스 스크립트 배포 URL 정보가 잘못되었습니다: ' + err);
+                });
+            } else {
+                // 시뮬레이터 모드 작동
+                setTimeout(() => {
+                    openStatusModal('success', '시뮬레이터 모드 성공 🎉', '웹앱 URL 정보가 입력되지 않아 모의 데이터를 생성했습니다.\n\n코드 내부 GAS_WEB_APP_URL 변수에 본인의 GAS 배포 주소를 설정해 주세요.');
+                }, 1500);
+            }
+        }
+
+        function openStatusModal(type, title, text) {
+            const modal = document.getElementById('status-modal');
+            const iconContainer = document.getElementById('modal-icon');
+            const titleEl = document.getElementById('modal-title');
+            const textEl = document.getElementById('modal-text');
+            const closeBtn = document.getElementById('modal-close-btn');
+
+            titleEl.innerText = title;
+            textEl.innerText = text;
+
+            iconContainer.innerHTML = '';
+            closeBtn.classList.add('hidden');
+
+            if (type === 'loading') {
+                iconContainer.innerHTML = `
+                    <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-200 border-t-indigo-600"></div>
+                `;
+            } else if (type === 'success') {
+                iconContainer.innerHTML = `
+                    <div class="bg-emerald-100 p-3 rounded-full">
+                        <svg class="h-8 w-8 text-emerald-600 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                `;
+                closeBtn.classList.remove('hidden');
+            } else if (type === 'error') {
+                iconContainer.innerHTML = `
+                    <div class="bg-red-100 p-3 rounded-full">
+                        <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                `;
+                closeBtn.classList.remove('hidden');
+            } else if (type === 'warning') {
+                iconContainer.innerHTML = `
+                    <div class="bg-amber-100 p-3 rounded-full">
+                        <svg class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                `;
+                closeBtn.classList.remove('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeStatusModal() {
+            const modal = document.getElementById('status-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStep();
+                window.scrollTo(0, 0);
+            } else {
+                submitPlanToSheet();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStep();
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
+</body>
+</html>
